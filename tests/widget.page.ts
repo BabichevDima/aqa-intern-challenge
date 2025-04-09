@@ -5,10 +5,13 @@ enum WidgetPageSelectors {
     WIDGET_BODY = '[class^=widgetWrapper] > [class^=widget__]',
     HEADER_TEXT = 'header h5',
     BUTTON_OPEN = '[data-test=openWidget]',
-    BUTTON_WRITE_TO_US = '[class^=btn]',
+    BUTTON_WRITE_TO_US = '[class^=cbutton__]',
     ARTICLE_POPULAR_TITLE = '[class^=popularTitle__]',
     ARTICLE_POPULAR_LIST = `${ARTICLE_POPULAR_TITLE} + ul[class^=articles__]`,
     ARTICLE_POPULAR_LIST_ITEM = `${ARTICLE_POPULAR_LIST} > li`,
+    BACK_BUTTON = '[data-test=button_back]',
+    INPUT_SEARCH = '[class^=cinput-text-input__]',
+    FOUND_TITLE = '[class^=found__] > [class^=title__]',
 }
 
 export class WidgetPage {
@@ -25,7 +28,11 @@ export class WidgetPage {
     }
 
     async getPopularArticles() {
-        return this.wrapper().locator(WidgetPage.selector.ARTICLE_POPULAR_LIST_ITEM).all()
+        return this.wrapper().locator(WidgetPage.selector.ARTICLE_POPULAR_LIST_ITEM)
+    }
+
+    async iEnterTextInSearchInput(value) {
+        return this.wrapper().locator(WidgetPage.selector.INPUT_SEARCH).fill(value);
     }
 
     async clickWriteToUs() {
@@ -34,6 +41,10 @@ export class WidgetPage {
 
     async getTitle() {
         return this.wrapper().locator(WidgetPage.selector.HEADER_TEXT).textContent();
+    }
+
+    async getFoundTitle() {
+        return this.wrapper().locator(WidgetPage.selector.FOUND_TITLE).textContent();
     }
 
     getWidgetBody() {
