@@ -24,11 +24,18 @@ test.describe('Uchi.ru widget ', () => {
     await widgetPage.openWidget();
 
     const articles = await widgetPage.getPopularArticles();
-
-    await articles[0].click();
-
+  
+    await articles.nth(0).click();
     await widgetPage.clickWriteToUs();
 
     expect(await widgetPage.getTitle()).toEqual('Связь с поддержкой');
+  });
+
+  test('displays message when no search results found', async ({ page }) => {
+    await widgetPage.openWidget();
+
+    await widgetPage.iEnterTextInSearchInput('Dummy text for test');
+
+    expect(await widgetPage.getFoundTitle()).toEqual('Нашлось 0 статей');
   });
 });
